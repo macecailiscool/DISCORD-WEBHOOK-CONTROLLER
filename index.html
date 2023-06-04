@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Discord Webhook Controller</title>
+  <style>
+    /* CSS styles for the sleek UI */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .error {
+      color: #ff0000;
+      margin-top: 5px;
+    }
+  </style>
+  <script>
+    // JavaScript code for handling form submission and error handling
+    document.addEventListener("DOMContentLoaded", function() {
+      const form = document.getElementById("webhookForm");
+      const webhookInput = document.getElementById("webhookInput");
+      const messageInput = document.getElementById("messageInput");
+      const errorContainer = document.getElementById("errorContainer");
+
+      form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const webhookUrl = webhookInput.value;
+        const message = messageInput.value;
+
+        if (!webhookUrl) {
+          displayError("Webhook URL is required.");
+          return;
+        }
+
+        if (!isValidWebhookUrl(webhookUrl)) {
+          displayError("Invalid Webhook URL.");
+          return;
+        }
+
+        if (!message) {
+          displayError("Message is required.");
+          return;
+        }
+
+        sendWebhookMessage(webhookUrl, message);
+      });
+
+      function isValidWebhookUrl(url) {
+        // Perform your own validation logic here
+        // This is just a basic example
+        const webhookUrlRegex = /^https:\/\/discord\.com\/api\/webhooks\/\d+\/[\w-]+$/;
+        return webhookUrlRegex.test(url);
+      }
+
+      function sendWebhookMessage(webhookUrl, message) {
+        // Use your preferred method to send the webhook message
+        // This is just a placeholder
+        console.log("Sending webhook message:");
+        console.log("Webhook URL: " + webhookUrl);
+        console.log("Message: " + message);
+
+        // Clear inputs and display success message
+        webhookInput.value = "";
+        messageInput.value = "";
+        displayError("");
+        alert("Webhook message sent successfully!");
+      }
+
+      function displayError(errorMessage) {
+        errorContainer.textContent = errorMessage;
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Discord Webhook Controller</h1>
+    <form id="webhookForm">
+      <label for="webhookInput">Webhook URL:</label>
+      <input type="text" id="webhookInput" placeholder="Enter webhook URL">
+
+      <label for="messageInput">Message:</label>
+      <textarea id="messageInput" placeholder="Enter message"></textarea>
+
+      <button type="submit">Send Message</button>
+
+      <div id="errorContainer" class="error"></div>
+    </form>
+  </div>
+</body>
+
+</html>
